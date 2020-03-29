@@ -1,0 +1,32 @@
+[
+    {
+      "icon": "home",
+      "name": "Inicio",
+      "redirectTo": "/action-sheet",
+      "color" : "cambista"
+    },
+    {
+      "icon": "aperture",
+      "name": "Transacciones",
+      "redirectTo": "/transaction",
+      "color" : "cambista"
+    },
+    {
+      "icon": "ios-card",
+      "name": "Cuentas",
+      "redirectTo": "/account",
+      "color" : "cambista"
+    },
+    {
+      "icon": "ios-chatbubbles",
+      "name": "Chat",
+      "redirectTo": "/chat",
+      "color" : "cambista"
+    },
+    {
+      "icon": "contact",
+      "name": "Perfil",
+      "redirectTo": "/perfil",
+      "color" : "cambista"
+    }
+  ]

@@ -1,0 +1,74 @@
+<app-header titulo="cuentas bancarias"></app-header>
+  
+<ion-content>
+
+  <h5 class="ion-text-center">Listado de Cuentas Bancarias</h5>
+  <ion-searchbar class="capitalize" no-shadow placeholder="Ingresar su Busqueda" mode="md" animated  (ionChange)="onSearchInput( $event )"></ion-searchbar>
+
+  <ion-list *ngIf="!contentloaded">
+    <ion-item *ngFor="let account of [1,1,1,1,1,1]" class="animated flash slow infinite">
+
+      <ion-thumbnail slot="start">
+        <ion-skeleton-text class="animated flash slow infinite"></ion-skeleton-text>
+      </ion-thumbnail>
+
+      <ion-label>
+        <ion-skeleton-text width="20%"></ion-skeleton-text>
+        <ion-skeleton-text width="20%"></ion-skeleton-text>
+        <ion-skeleton-text width="30%"></ion-skeleton-text>
+        <ion-skeleton-text width="60%"></ion-skeleton-text>
+        <ion-skeleton-text width="40%"></ion-skeleton-text>
+      </ion-label>
+    </ion-item>
+
+  </ion-list>
+
+  <h6 *ngIf="items.length === 0" class="ion-text-center">¡No se han Encontrado Registros!</h6>
+  <h6 *ngIf="items.length === 0" class="ion-text-center subtitulo" >¡Agrega tus Cuentas Bancarias y Empieza a Cambiar!</h6>
+
+  <ion-list *ngIf="items.length > 0">
+
+    <div *ngIf="searching" class="spinner-container">
+      <ion-spinner name="lines"></ion-spinner>
+    </div>
+
+    <ion-item-sliding *ngFor="let item of items | filter: textSearch">
+      
+      <ion-item lines="none">
+        <ion-avatar slot="start">
+          <img src="assets/imgs/ionic3-ico.png">
+        </ion-avatar>
+        <ion-label>
+          <h2>{{ item.bank_account }}</h2>
+          <p>Propietario: {{item.name_account}}</p>
+          <p>Tipo: {{item.type_name_account | titlecase }}</p>
+          <p>N° Cuenta: {{item.number_account_type}}</p>
+          <p>Moneda: {{item.type_money_account | titlecase }}</p>
+        </ion-label>
+        <ion-icon name="arrow-forward" color="subtitulos" slot="end"></ion-icon>
+      </ion-item>
+  
+      <ion-item-options>
+        <ion-item-option color="cambista"  (click)="updAccount(item)"> 
+          <ion-icon slot="top" name="create"></ion-icon>
+          Editar
+        </ion-item-option>
+        <ion-item-option style="background:#415b5c;" (click)="delAcount(item)"> 
+          <ion-icon slot="top" name="trash"></ion-icon>
+          Eliminar
+        </ion-item-option>
+      </ion-item-options>
+    </ion-item-sliding>
+    
+    <h6 *ngIf="(items | filter : textSearch).length === 0" class="ion-text-center">¡No se han encontrado registros!</h6>
+
+
+  </ion-list>
+
+  <ion-fab vertical="bottom" horizontal="end" slot="fixed" >
+    <ion-fab-button color="cambista" (click)="addModal()">
+      <ion-icon name="ios-add-circle-outline"></ion-icon>
+    </ion-fab-button>
+  </ion-fab>
+
+</ion-content>

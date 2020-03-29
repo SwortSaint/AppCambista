@@ -1,0 +1,29 @@
+<app-header titulo="operaciones realizadas"></app-header>
+
+ 
+
+  <ion-content>
+ 
+    <h5 class="ion-text-center">Listado de Cuentas Bancarias</h5>
+    <ion-searchbar class="capitalize" no-shadow placeholder="Ingresar su Busqueda" mode="md" animated  (ionChange)="onSearchInput( $event )"></ion-searchbar>
+    
+    <ion-segment color="cambista">
+
+      <ion-segment-button value="pendiente">
+        <ion-label>Pendiente</ion-label>
+      </ion-segment-button>
+
+      <ion-segment-button value="completado">
+        <ion-label>Completado</ion-label>
+      </ion-segment-button>
+
+      <ion-segment-button value="cancelado">
+        <ion-label>Cancelado</ion-label>
+      </ion-segment-button>
+    </ion-segment>
+
+  </ion-content>
+
+
+
+  

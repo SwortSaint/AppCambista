@@ -12,6 +12,8 @@ import {ComponentsModule} from './components/components.module';
 import { HttpClientModule } from '@angular/common/http';
 import { PipesModule } from './pipes/pipes.module';
 import { ReactiveFormsModule} from '@angular/forms';
+import { SocketIoModule, SocketIoConfig } from 'ngx-socket-io';
+const config: SocketIoConfig = { url: 'http://localhost:5000', options: {} };
 
 @NgModule({
   declarations: [AppComponent],
@@ -22,7 +24,8 @@ import { ReactiveFormsModule} from '@angular/forms';
   }), AppRoutingModule,
       ComponentsModule,
       PipesModule,
-      HttpClientModule
+      HttpClientModule,
+      SocketIoModule.forRoot(config)
 ],
   providers: [
     StatusBar,

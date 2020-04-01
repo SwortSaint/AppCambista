@@ -7,7 +7,7 @@ import { NavParams } from '@ionic/angular';
 import { finalize } from 'rxjs/operators';
 
 const URL = environment.url;
-const URLroute = "App-Account";
+const URLroute = environment.urlrouteaccount;
 
 @Component({
   selector: 'app-account-edit',

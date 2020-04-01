@@ -4,6 +4,7 @@ import { ModalController, AlertController } from '@ionic/angular';
 import { AccountAddPage } from '../modals/account-add/account-add.page';
 import { AccountEditPage } from '../modals/account-edit/account-edit.page';
 import { AlertsService } from 'src/app/services/alerts.service';
+import { environment } from 'src/environments/environment';
 
 
 @Component({
@@ -44,7 +45,7 @@ export class AccountPage {
 
   }
 
-  //FUNCION PARA LLAMAR EL MODAL DE EDITAR CUENTAS BANCARIAS
+//FUNCION PARA LLAMAR EL MODAL DE EDITAR CUENTAS BANCARIAS
   async updAccount(list){
 
    const modal = await this.modalCtrl.create({ 
@@ -69,7 +70,20 @@ export class AccountPage {
 
   async delAcount(list){
 
-   await this.alertsService.presentAlertConfirm(list, this.items);
+    let params = {
+      "id_account_user": list.id_account_user,
+      "setting": "delaccount"
+    }
+
+   await this.alertsService.presentAlertConfirm(list, this.items,environment.messageSuccess,
+            environment.messageSuccessAccount,
+            environment.messageErrorAccountHeader,
+            environment.messageErrorAccountTitle,
+            environment.messageErrorRedHeader,
+            environment.messageErrorRedTitle,
+            environment.urlrouteaccount,
+            environment.messagePresentAlertAccount,
+            params);
 
     }
   

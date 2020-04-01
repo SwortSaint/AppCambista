@@ -6,7 +6,7 @@ import { environment } from 'src/environments/environment';
 import { finalize } from 'rxjs/operators';
 
 const URL = environment.url;
-const URLroute = "App-Account";
+const URLroute = environment.urlrouteaccount;
 
 @Component({
   selector: 'app-account-add',
@@ -67,6 +67,7 @@ export class AccountAddPage {
       this.http.post(URL+URLroute, JSON.stringify(account)).pipe(
         finalize(async () => {
             await this.alertsService.hideLoader();
+            this.disableButton = false;  
         })
     )
     .subscribe(data => {
@@ -75,14 +76,11 @@ export class AccountAddPage {
 
               if(this.responseData.error){
                     this.alertsService.ErrorAlert("¡Error! Al Agregar Cuenta", "Rellene Nuevamente los Campos");
-                    this.disableButton = false;  
               }else{
                     this.alertsService.SuccessAlert("¡Felicidades!", "Cuenta Agregada Correctamente");
-                    this.disableButton = false;  
               }
         },(err) => {
-                    this.alertsService.ErrorAlert("¡Error!", "Compruebe su Conexión de Internet");
-                    this.disableButton = false;  
+                    this.alertsService.ErrorAlert("¡Error!", "Compruebe su Conexión de Internet"); 
         });
 
       }

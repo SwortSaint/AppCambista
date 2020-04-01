@@ -1,28 +1,83 @@
 <app-header titulo="operaciones realizadas"></app-header>
 
- 
-
   <ion-content>
  
     <h5 class="ion-text-center">Listado de Cuentas Bancarias</h5>
     <ion-searchbar class="capitalize" no-shadow placeholder="Ingresar su Busqueda" mode="md" animated  (ionChange)="onSearchInput( $event )"></ion-searchbar>
     
-    <ion-segment color="cambista">
+    <ion-segment color="cambista" (ionChange)="segmentChanged($event)">
+ 
+      <ion-segment-button value="todos">
+        <ion-label>Todos</ion-label>
+      </ion-segment-button>
 
-      <ion-segment-button value="pendiente">
+      <ion-segment-button value="0">
         <ion-label>Pendiente</ion-label>
       </ion-segment-button>
 
-      <ion-segment-button value="completado">
+      <ion-segment-button value="1">
         <ion-label>Completado</ion-label>
       </ion-segment-button>
 
-      <ion-segment-button value="cancelado">
+      <ion-segment-button value="2">
         <ion-label>Cancelado</ion-label>
       </ion-segment-button>
     </ion-segment>
 
+    <ion-list *ngIf="!contentloaded" >
+      <ion-item *ngFor="let account of [1,1,1,1,1,1]" class="animated flash slow infinite">
+  
+        <ion-thumbnail slot="start">
+          <ion-skeleton-text class="animated flash slow infinite"></ion-skeleton-text>
+        </ion-thumbnail>
+  
+        <ion-label>
+          <ion-skeleton-text width="20%"></ion-skeleton-text>
+          <ion-skeleton-text width="20%"></ion-skeleton-text>
+          <ion-skeleton-text width="30%"></ion-skeleton-text>
+          <ion-skeleton-text width="60%"></ion-skeleton-text>
+          <ion-skeleton-text width="40%"></ion-skeleton-text>
+        </ion-label>
+      </ion-item>
+  
+    </ion-list>  
+
+    <div *ngIf="searching && (items | filterTransaction :  publisher:'confirmation').length > 0" class="spinner-container">
+      <ion-spinner name="lines"></ion-spinner>
+    </div>
+   
+    <ion-item-sliding *ngFor="let item of items  | filterSearchTransaction: textSearch | filterTransaction: publisher:'confirmation'" [ngSwitch]="item.confirmation">
+      <ion-item lines="none">
+        <ion-avatar slot="start">
+          <img src="assets/imgs/ionic3-ico.png">
+        </ion-avatar>
+        <ion-label>
+          <h2>Transacción N°: <span>{{ item.id_transaccion }}</span></h2>
+          <p>Cuenta de Recepción: <span>{{ item.user_account_reception }}</span></p>
+          <p>N° Operación: <span >{{ item.number_operation | titlecase}}</span></p>
+          <p>Monto que Envia: <span >{{ item.cash_up }}</span></p>
+          <p>Monto que Recibe:  <span>{{item.cash_down}}</span></p>
+          <p *ngSwitchCase="'0'" >Status: <strong style="color:#ff9600;"> Pendiente</strong></p>
+          <p *ngSwitchCase="'1'" >Status: <strong style="color:#008282;"> Confirmado</strong></p>
+          <p *ngSwitchCase="'2'" >Status: <strong style="color:#f53d3d;"> Cancelado</strong></p>
+        </ion-label>
+        <ion-icon *ngSwitchCase="'0'" name="arrow-forward" color="subtitulos" slot="end"></ion-icon>
+      </ion-item>
+  
+      <ion-item-options *ngSwitchCase="'0'">
+        <ion-item-option class="ion-text-center" style="background:#415b5c;" (click)="delTransaction(item)"> 
+          <ion-icon slot="top" name="trash"></ion-icon>
+          Cancelar <br>Transacción
+        </ion-item-option>
+      </ion-item-options>
+    </ion-item-sliding>
+
+    <h6 *ngIf="(items | filterTransaction :  publisher:'confirmation').length === 0" class="ion-text-center">¡No se han encontrado registros!</h6>
+    <h6 *ngIf="(items | filterTransaction :  publisher:'confirmation').length === 0" class="ion-text-center subtitulo" >¡Agrega tus Cuentas Bancarias y Empieza a Cambiar!</h6>
+    <h6 *ngIf="(items | filterTransaction :  publisher:'confirmation').length > 0 && (items | filterSearchTransaction : textSearch).length === 0" class="ion-text-center">¡No se han encontrado registros!</h6>
   </ion-content>
+
+ 
 
 
 

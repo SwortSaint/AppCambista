@@ -4,7 +4,22 @@
 
 export const environment = {
   production: false,
-  url: 'http://localhost/api-rest/'
+  url: 'http://localhost/api-rest/',
+  urlrouteaccount: 'App-Account',
+  urlroutetransaction : 'App-Transaction',
+  //Alert Account
+  messagePresentAlertAccount: '¿Desea Eliminar la Cuenta?',
+  messageSuccess : '¡Felicidades!',
+  messageSuccessAccount : 'Cuenta Eliminada Correctamente',
+  messageErrorAccountHeader : '¡Error! Al Eliminar Cuenta',
+  messageErrorAccountTitle : 'Intente Nuevamente',
+  messageErrorRedHeader : '¡Error!',
+  messageErrorRedTitle : 'Compruebe su Conexión de Internet',
+  //Alert Transaction
+  messagePresentTransaction: '¿Desea Cancelar la Transacción?',
+  messageSuccessTransaction : 'Transacción Cancelada Exitosamente',
+  messageErrorTransactionHeader : '¡Error! Al Cancelar la Transacción',
+  messageErrorTransactionTitle : 'No se ha Podido Cancelar la Transacción'
 };
 
 /*

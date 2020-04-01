@@ -2,6 +2,10 @@ h5,h2{
     color: #666666;
 }
 
+span{
+    color: #8e9093;  
+}
+
 .sc-ion-searchbar-md-h {
     -webkit-padding-start: 6px;
     padding-inline-start: 6px;
@@ -15,3 +19,66 @@ h5,h2{
 ion-searchbar[no-shadow] {
     border-bottom: none !important;
   }
+
+
+.subtitulo{
+    color: #008282;
+}
+
+h2{
+    font-size: 16px;
+}
+
+.list-ios {
+    margin-top: 1px;
+}
+
+ion-item-sliding {
+    border-left: 5px solid #008282;
+}
+
+ion-item-sliding, ion-item-sliding .item {
+    border-bottom: 0.55px solid #008282 !important; 
+}
+
+p {
+    overflow: inherit;
+    font-size: 0.95rem;
+    line-height: normal;
+    text-overflow: inherit;
+    color: #666666;
+    word-wrap: break-word; 
+    white-space: normal;
+    margin: 0 0 2px;
+}
+
+ion-icon[slot=top] {
+    margin-bottom: 3px;
+    font-size: 1.4rem
+  }
+
+.sc-ion-searchbar-md-h {
+    -webkit-padding-start: 6px;
+    padding-inline-start: 6px;
+    -webkit-padding-end: 6px;
+    padding-inline-end: 6px;
+    padding-top: 5px;
+    padding-bottom: 5px;
+    background: rgba(0, 0, 0, 0.2);
+}
+
+.capitalize { text-transform: lowercase; }
+
+    .spinner-container {
+    width: 100%;
+    text-align: center;
+    padding: 10px;
+    }
+
+.sc-ion-segment-ios-h.ion-color.sc-ion-segment-ios-s > .segment-button-checked, .sc-ion-segment-ios-h.ion-color.sc-ion-segment-ios-s > .segment-button-checked.activated {
+        border-radius: 0px;
+}
+
+.sc-ion-segment-ios-h.ion-color.sc-ion-segment-ios-s > ion-segment-button {
+    border-radius: 0px;
+}

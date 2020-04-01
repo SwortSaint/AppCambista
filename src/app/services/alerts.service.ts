@@ -6,7 +6,7 @@ import { environment } from 'src/environments/environment';
 import { finalize } from 'rxjs/operators';
 
 const URL = environment.url;
-const URLroute = "App-Account";
+const URLroute = environment.urlrouteaccount;
 
 @Injectable({
   providedIn: 'root'
@@ -67,9 +67,12 @@ export class AlertsService {
         return this.loadingController.dismiss();
     }
 
-    async presentAlertConfirm(list, items) {
+    async presentAlertConfirm(list, items, messageSuccess: string,messageSuccessAccount: string,
+      messageErrorAccountHeader: string, messageErrorAccountTitle: string, messageErrorRedHeader: string,
+      messageErrorRedTitle: string, site : string,messagePresentAlertAccount: string, params) {
+
       const alert = await this.alertController.create({
-        header: '¿Desea Eliminar la Cuenta?',
+        header: messagePresentAlertAccount,
         message: 'Recuerde que al Seleccionar <strong>SI</strong>, Borrara Automaticamente el Registro',
         buttons: [
           {
@@ -81,30 +84,26 @@ export class AlertsService {
             handler: () => {
 
               let index = items.indexOf(list);
-              let del_account = {
-                "id_account_user": list.id_account_user,
-                "setting": "delaccount"
-              }
   
              this.showLoader();
   
               if(index > -1){
-                 this.http.post(URL+URLroute, JSON.stringify(del_account)).pipe(
+                 this.http.post(URL+site, JSON.stringify(params)).pipe(
                   finalize(async () => {
-                      await this.hideLoader();
+                      this.hideLoader();
                   })
               ).subscribe(data => {
   
                  this.responseData = data;
           
                         if(this.responseData.error){
-                            this.ErrorAlert("¡Error! Al Eliminar Cuenta", "Intente Nuevamente"); 
+                            this.ErrorAlert(messageErrorAccountHeader, messageErrorAccountTitle); 
                         }else{
                             items.splice(index, 1);
-                            this.ErrorAlert("¡Felicidades!", "Cuenta Eliminada Correctamente");
+                            this.ErrorAlert(messageSuccess, messageSuccessAccount);
                         }
                   },(err) => {
-                            this.ErrorAlert("¡Error!", "Compruebe su Conexión de Internet");
+                            this.ErrorAlert(messageErrorRedHeader, messageErrorRedTitle);
                   });
     
               }

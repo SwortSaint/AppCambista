@@ -6,7 +6,8 @@ import { delay } from 'rxjs/operators'
 import { environment } from 'src/environments/environment';
 
 const URL = environment.url;
-const URLroute = "App-Account?";
+const URLrouteAccount = environment.urlrouteaccount;
+const URLrouteTransaction = environment.urlroutetransaction;
 
 @Injectable({
   providedIn: 'root'
@@ -20,7 +21,11 @@ export class DataService {
   }
 
   getAccount() {
-    return this.http.get<any[]>(URL+URLroute+"opcion=allaccount&"+"id="+40);
+    return this.http.get<any[]>(URL+URLrouteAccount+"?opcion=allaccount&"+"id="+40);
+  }
+
+  getTransaction() {
+    return this.http.get<any[]>(URL+URLrouteTransaction+"?opcion=all&"+"id="+40);
   }
 }
 

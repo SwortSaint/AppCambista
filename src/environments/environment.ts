@@ -7,6 +7,7 @@ export const environment = {
   url: 'http://localhost/api-rest/',
   urlrouteaccount: 'App-Account',
   urlroutetransaction : 'App-Transaction',
+  urlrouterserver: 'http://localhost:5000',
   //Alert Account
   messagePresentAlertAccount: '¿Desea Eliminar la Cuenta?',
   messageSuccess : '¡Felicidades!',

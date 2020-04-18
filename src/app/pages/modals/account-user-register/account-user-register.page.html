@@ -1,0 +1,69 @@
+<ion-header>
+  <ion-toolbar color="cambista">
+    <ion-title>Registrar Usuario</ion-title>
+    <ion-buttons slot="start">
+      <ion-button (click)="dismissModal()"><ion-icon class="icon-size" name="arrow-back" ></ion-icon>Atrás</ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="ion-padding">
+
+  <ion-img class="logo-register ion-margin-top" src="/assets/imgs/luck.png"></ion-img>
+  <ion-text color="cambista"><h5 class="ion-text-center"> <strong>Registro</strong></h5></ion-text> 
+  <ion-text color="cambista"><h6 class="ion-text-center"> ¡Crea una cuenta y empieza a cambiar!</h6></ion-text> 
+
+  <ion-item  class="ion-margin-top">
+    <ion-label><ion-icon name="browsers" slot="start" color="subtitulos"></ion-icon> Tipo de Documento</ion-label>
+    <ion-select interface="popover" placeholder="Seleccione">
+      <ion-select-option value="CE">Carnet de Extranjeria</ion-select-option>
+      <ion-select-option value="CR">Carnet de Refuiado</ion-select-option>
+      <ion-select-option value="DNI">DNI</ion-select-option>
+      <ion-select-option value="PASSPORT">Pasaporte</ion-select-option>
+      <ion-select-option value="PTP">PTP</ion-select-option>
+    </ion-select>
+  </ion-item>
+
+  <ion-item>
+    <ion-label>
+      <ion-icon name="person" slot="start" color="subtitulos"></ion-icon>
+    </ion-label>
+    <ion-input type="text" placeholder="N° Cuenta" clearInput></ion-input>
+  </ion-item>
+
+  <ion-item>
+    <ion-label>
+      <ion-icon name="mail" slot="start" color="subtitulos"></ion-icon>
+    </ion-label>
+    <ion-input type="text" placeholder="Correo Eléctronico" clearInput></ion-input>
+  </ion-item>
+
+  <ion-item>
+    <ion-label>
+      <ion-icon name="call" slot="start" color="subtitulos"></ion-icon>
+    </ion-label>
+    <ion-input type="text" maxlength="9" placeholder="Celular" clearInput></ion-input>
+  </ion-item>
+
+  <ion-item>
+    <ion-label>
+      <ion-icon name="unlock"  slot="start" color="subtitulos"></ion-icon>
+    </ion-label>
+    <ion-input type="password" maxlength="15" placeholder="Ingresar Contraseña" clearInput></ion-input>
+  </ion-item>
+
+  <ion-item>
+    <ion-label>
+      <ion-icon name="lock"  slot="start" color="subtitulos"></ion-icon>
+    </ion-label>
+    <ion-input type="password" maxlength="15" placeholder="Repetir Contraseña" clearInput></ion-input>
+  </ion-item>
+
+  <p class="ion-text-center">Al <ion-text color="cambista"><strong>Crear una cuenta</strong></ion-text>, aceptas nuestros
+    Términos, Condiciones y Politicas de uso de datos</p>
+
+  <ion-button expand="block" size="small" class="ion-padding" color="cambista"><ion-icon name="add-circle"></ion-icon> &nbsp;Crear Cuenta</ion-button>
+
+  
+
+</ion-content>

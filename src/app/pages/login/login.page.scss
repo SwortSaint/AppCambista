@@ -1,0 +1,75 @@
+
+ion-content{
+    --background: url('/assets/imgs/fondo-cambista.jpeg')  no-repeat cover fixed center;
+
+    background: url('/assets/imgs/fondo-cambista.jpeg') no-repeat fixed center; 
+    -webkit-background-size: cover;
+    -moz-background-size: cover;
+    background-size: cover;
+}
+
+.logo-cambista{
+    width: 150px;
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+h5{
+    margin-top: 10px;
+    margin-bottom: 0px;
+    font-weight: 700;
+    color: white;
+}
+
+h6{
+    margin-top: 5px;
+    margin-bottom: 3px;
+    color: white;
+    font-size: 0.85rem
+}
+
+
+.recovery{
+    color: white;
+}
+
+ion-input{
+    color: #fff;  
+}
+
+ion-item {
+    --border-color: var(--ion-color-subtitulos, #ff9900);
+  }
+
+
+ion-icon[slot=start] {
+    vertical-align: middle;
+    padding-bottom: 5px;
+    font-size: 1.4rem
+  }
+
+
+ion-icon[slot=end] {
+  margin-top: 40px;
+}
+
+.item-background-color{
+    --ion-item-background: rgb(0, 0, 0) transparent;;
+}
+
+
+.label-floating.sc-ion-label-ios-h{
+    color: white;
+}
+
+
+.button-center{
+    display: flex; 
+    justify-content: center;
+}
+
+.mainSlide, .mainSlide ion-slide {
+    width: 100%;
+    height: 100%;
+}

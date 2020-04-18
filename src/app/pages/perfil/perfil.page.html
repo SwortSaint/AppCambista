@@ -13,12 +13,12 @@
           Notificaciones
       </ion-item> 
 
-      <ion-item button>
+      <ion-item button  (click)="share()">
           <ion-icon name="star" slot="start" color="subtitulos"></ion-icon>
           Recomendar App
       </ion-item> 
 
-      <ion-item button>
+      <ion-item button (click)="termsModal()">
           <ion-icon name="copy"  slot="start" color="subtitulos"></ion-icon>
           Términos y Condiciones
       </ion-item> 
@@ -28,9 +28,9 @@
           Cambiar Contraseña
       </ion-item> 
 
-      <ion-item button>
-          <ion-icon name="exit" slot="start" color="subtitulos"></ion-icon>
-          Salir
+      <ion-item button (click)="logout()">
+          <ion-icon name="exit" slot="start" color="subtitulos" ></ion-icon>
+          Cerrar Sesión
       </ion-item> 
 
 

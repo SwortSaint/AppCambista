@@ -2,7 +2,7 @@
     {
       "icon": "home",
       "name": "Inicio",
-      "redirectTo": "/action-sheet",
+      "redirectTo": "/inicio",
       "color" : "cambista"
     },
     {

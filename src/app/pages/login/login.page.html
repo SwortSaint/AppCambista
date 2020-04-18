@@ -1,0 +1,56 @@
+<ion-content class="ion-padding">
+
+  <ion-img class="logo-cambista ion-margin-top" src="/assets/imgs/logo-cambista.png"></ion-img>
+  
+  <ion-text>
+    <h5 class="ion-text-center"> Cambista Online</h5>
+    <h6 class="ion-text-center"> La manera más rápida y segura de cambiar</h6>
+    <h6 class="ion-text-center"> dólares  y soles en Lima y </h6>
+    <h6 class="ion-text-center"> en todo el Perú </h6>
+  </ion-text>
+
+<ion-grid>
+  <ion-row class="ion-padding-top	ion-margin-top ion-justify-content-center">
+    <ion-col class="ion-align-self-center ion-padding-top" size-md="6" size-lg="5" size-xs="12">
+
+      <form [formGroup]="formlogin">
+        
+      <ion-item class="item-background-color ion-padding-top">
+        <ion-label position="floating"><ion-icon name="mail" color="subtitulos" slot="start"></ion-icon> Correo Electrónico</ion-label>
+        <ion-input formControlName="email"  clearOnEdit="true"></ion-input>
+      </ion-item>
+
+      <div class="ion-text-left ion-margin-start" *ngFor="let error of errorMessages.email">
+        <ng-container *ngIf="formlogin.controls.email.hasError(error.type) && (formlogin.controls.email.dirty || formlogin.controls.email.touched)">
+          <ion-text color="light"><ion-icon color="subtitulos" name="add-circle"></ion-icon>{{error.message}}</ion-text>
+        </ng-container>
+      </div>
+
+      <ion-item class="item-background-color">
+        <ion-label position="floating"><ion-icon name="lock" color="subtitulos" slot="start"></ion-icon> Contraseña </ion-label>
+        <ion-input formControlName="password" [type]="passwordType" #passwordEyeRegister (ionChange)="toggleSendwordMode(formlogin.get('password').value)" clearOnEdit="false"> </ion-input>
+        <ion-icon *ngIf="booleanpass"  [name]="passwordIcon" color="subtitulos"  slot="end" item-right (click)="togglePasswordMode()"></ion-icon>
+      </ion-item>
+
+      <div class="ion-text-left ion-margin-start" *ngFor="let error of errorMessages.password">
+        <ng-container *ngIf="formlogin.controls.password.hasError(error.type) && (formlogin.controls.password.dirty || formlogin.controls.email.touched)">
+          <ion-text color="light"><ion-icon color="subtitulos" name="add-circle"></ion-icon>{{error.message}}</ion-text>
+        </ng-container>
+      </div>
+
+      <ion-text class="ion-text-right recovery" >
+        <p><strong>¿Olvidaste tu Contraseña?</strong></p></ion-text>
+      
+        <div class="button-center">
+          <ion-button (click)="login()" [disabled]="!formlogin.valid || disableButton" color="cambista" size="small"> <ion-icon name="log-in"></ion-icon>&nbsp; Iniciar Sesión</ion-button>
+          <ion-button (click)="addModal()" color="subtitulos" size="small"> <ion-icon name="contacts"></ion-icon>&nbsp; Registrate</ion-button>
+        </div>
+      </form>
+
+    </ion-col>
+ 
+  </ion-row>
+</ion-grid>
+
+
+</ion-content>

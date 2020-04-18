@@ -1,6 +1,6 @@
 import { Component} from '@angular/core';
 import { DataService } from 'src/app/services/data.service';
-import { ModalController, AlertController } from '@ionic/angular';
+import { ModalController } from '@ionic/angular';
 import { AccountAddPage } from '../modals/account-add/account-add.page';
 import { AccountEditPage } from '../modals/account-edit/account-edit.page';
 import { AlertsService } from 'src/app/services/alerts.service';
@@ -19,7 +19,7 @@ export class AccountPage {
   public searching: any = false;
   contentloaded = false;
 
-  constructor(public alertsService: AlertsService, public dataService: DataService, public modalCtrl: ModalController, public alertController: AlertController ) {
+  constructor(public alertsService: AlertsService, public dataService: DataService, public modalCtrl: ModalController ) {
     this.setFilteredItems();
 
     setTimeout(() => {

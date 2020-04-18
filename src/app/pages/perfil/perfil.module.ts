@@ -8,14 +8,20 @@ import { PerfilPageRoutingModule } from './perfil-routing.module';
 
 import { PerfilPage } from './perfil.page';
 import { ComponentsModule } from 'src/app/components/components.module';
+import { TermsPageModule } from '../modals/terms/terms.module';
+import { TermsPage } from '../modals/terms/terms.page';
 
 @NgModule({
+  entryComponents:[
+    TermsPage
+  ],
   imports: [
     CommonModule,
     FormsModule,
     IonicModule,
     PerfilPageRoutingModule,
-    ComponentsModule
+    ComponentsModule,
+    TermsPageModule
   ],
   declarations: [PerfilPage]
 })

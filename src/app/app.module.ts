@@ -13,6 +13,9 @@ import { HttpClientModule } from '@angular/common/http';
 import { PipesModule } from './pipes/pipes.module';
 import { ReactiveFormsModule} from '@angular/forms';
 import { SocketIoModule, SocketIoConfig } from 'ngx-socket-io';
+import { IonicStorageModule } from '@ionic/storage';
+import { SocialSharing } from '@ionic-native/social-sharing/ngx';
+
 const config: SocketIoConfig = { url: 'http://localhost:5000', options: {} };
 
 @NgModule({
@@ -25,11 +28,13 @@ const config: SocketIoConfig = { url: 'http://localhost:5000', options: {} };
       ComponentsModule,
       PipesModule,
       HttpClientModule,
-      SocketIoModule.forRoot(config)
+      SocketIoModule.forRoot(config),
+      IonicStorageModule.forRoot()
 ],
   providers: [
     StatusBar,
     SplashScreen,
+    SocialSharing,
     { provide: RouteReuseStrategy, useClass: IonicRouteStrategy }
   ],
   bootstrap: [AppComponent]

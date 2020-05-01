@@ -5,13 +5,92 @@
   </ion-toolbar>
 </ion-header>
 
-<ion-content>
-   <ion-list>
-       <ion-item *ngFor="let c of componentes | async" [routerLink]="c.redirectTo" detail>
-         <ion-icon slot="start" [name]="c.icon" color="primary"></ion-icon>
-         <ion-label>{{ c.name }}</ion-label>
-       </ion-item>
-   </ion-list>
+<ion-content class="ion-padding">
 
+  <ion-img class="logo-login ion-margin-bottom" src="/assets/imgs/logo-login.png"></ion-img>
+
+  <ion-text class="ion-text-center">
+    <p> la manera más <strong>económica</strong> y <strong>segura</strong></p>
+    <p class="ion-padding-bottom"> de cambiar tu <strong>dinero</strong> </p>
+  </ion-text>
+  
+  <p class="ion-text-center ion-padding-top"> Precio del <strong>dolar</strong> hoy en Perú</p>
+  <p style="margin-top: -4px;" class="ion-text-center "> Compra: <strong id="spanPrecioCompraPub"></strong><ion-icon name="repeat" color="subtitulos"></ion-icon>Venta: <strong id="spanPrecioVentaPub"></strong></p>
+  
+  <div class="cols">
+    <div class="col1">
+    <div class="contenedorInputs"><span style="font-size: 12px;padding-left: 6px;font-family: 'Arial',Helvetica,Arial,Lucida,sans-serif;color: #666;">Tú envías</span>
+                <input id="campoArriba" type="text">
+                <span style="font-size: 12px;padding-left: 6px;font-family: 'Arial',Helvetica,Arial,Lucida,sans-serif;color: #666;">Tú recibes</span>
+                <input id="campoAbajo" type="text">
+        </div>
+    </div>
+
+    <div class="col2">
+        <div class="contenedorLabels">
+            <div id="divTop">
+                <select id="selectMonedas"  style="background: #1b4142;" disabled="disabled">
+                  <option value="soles">Soles</option>
+                  </select>
+            </div>
+            
+    <button id="btnCambiar"></button>
+
+    <div id="divBottom">  
+
+        <select style="background: #415b5c;" id="selectCriptoMonedas" disabled="disabled">
+            <option value="dolares">Dólares</option>
+        </select>
+
+          </div>
+        </div>
+      </div>
+    </div>
+    
+    <h5 class="ion-text-center"> <ion-text color="cambista"> Tipo de cambio usado: </ion-text><strong>S/. </strong><strong id="spanTipCambio">dolar</strong></h5>
+   
+    <ion-item class="ion-margin-top">
+      <ion-label color="cambista">N° Cuenta de Recepción</ion-label>
+      <ionic-selectable
+        [(ngModel)]="list_value"
+        [items]="account "
+        itemValueField="_id"
+        itemTextField="bank_account"
+        searchPlaceholder="Ingresar su Busqueda"
+        headerColor="cambista"
+        [searchFailText]="'No se encontro la busqueda'"
+        [canSearch]="true"
+        [shouldFocusSearchbar]="true"
+        groupValueField="type_money_account"
+        groupTextField="type_money_account"
+        groupColor="cambista"
+       >
+
+        <ng-template ionicSelectableGroupEndTemplate let-group="group">
+          <ion-icon  name="card"></ion-icon> 
+        </ng-template>
+
+        <ng-template ionicSelectableCloseButtonTemplate>
+          <ion-icon name="arrow-back"></ion-icon> Atrás
+        </ng-template>
+
+        <ng-template ionicSelectablePlaceholderTemplate>
+          Seleccione 
+        </ng-template>
+
+        <ng-template ionicSelectableItemIconTemplate let-port="item" let-isPortSelected="isItemSelected">
+          <ion-icon slot="end" [name]="isPortSelected ? 'checkmark-circle' : 'radio-button-off'" [color]="isPortSelected ? 'subtitulos' : null">
+          </ion-icon>
+        </ng-template>
+
+        <ng-template ionicSelectableItemTemplate let-accounts="item"
+            let-isPortSelected="isItemSelected">
+            {{accounts.bank_account}} ({{accounts.doc_account}})
+        </ng-template>
+
+      </ionic-selectable>
+    </ion-item>
+
+    <ion-button  (click)="change_money()" expand="block" size="small" class="ion-padding" color="cambista"><ion-icon name="cash"></ion-icon> &nbsp;Realizar Cambio</ion-button>
 </ion-content>
 

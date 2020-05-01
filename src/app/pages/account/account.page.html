@@ -23,16 +23,16 @@
 
   </ion-list>
 
-  <h6 *ngIf="items.length === 0" class="ion-text-center">¡No se han Encontrado Registros!</h6>
-  <h6 *ngIf="items.length === 0" class="ion-text-center subtitulo" >¡Agrega tus Cuentas Bancarias y Empieza a Cambiar!</h6>
+  <h6 *ngIf="account.length === 0" class="ion-text-center">¡No se han Encontrado Registros!</h6>
+  <h6 *ngIf="account.length === 0" class="ion-text-center subtitulo" >¡Agrega tus Cuentas Bancarias y Empieza a Cambiar!</h6>
 
-  <ion-list *ngIf="items.length > 0">
+  <ion-list *ngIf="account.length > 0">
 
     <div *ngIf="searching" class="spinner-container">
       <ion-spinner name="lines"></ion-spinner>
     </div>
 
-    <ion-item-sliding *ngFor="let item of items | filter: textSearch">
+    <ion-item-sliding *ngFor="let item of account | filter: textSearch">
       
       <ion-item lines="none">
         <ion-avatar slot="start">
@@ -60,7 +60,7 @@
       </ion-item-options>
     </ion-item-sliding>
     
-    <h6 *ngIf="(items | filter : textSearch).length === 0" class="ion-text-center">¡No se han encontrado registros!</h6>
+    <h6 *ngIf="(account | filter : textSearch).length === 0" class="ion-text-center">¡No se han encontrado registros!</h6>
 
 
   </ion-list>

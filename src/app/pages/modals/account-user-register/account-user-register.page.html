@@ -13,9 +13,10 @@
   <ion-text color="cambista"><h5 class="ion-text-center"> <strong>Registro</strong></h5></ion-text> 
   <ion-text color="cambista"><h6 class="ion-text-center"> ¡Crea una cuenta y empieza a cambiar!</h6></ion-text> 
 
+  <form [formGroup]="formRegister">
   <ion-item  class="ion-margin-top">
     <ion-label><ion-icon name="browsers" slot="start" color="subtitulos"></ion-icon> Tipo de Documento</ion-label>
-    <ion-select interface="popover" placeholder="Seleccione">
+    <ion-select formControlName="type"  interface="popover" placeholder="Seleccione">
       <ion-select-option value="CE">Carnet de Extranjeria</ion-select-option>
       <ion-select-option value="CR">Carnet de Refuiado</ion-select-option>
       <ion-select-option value="DNI">DNI</ion-select-option>
@@ -24,46 +25,85 @@
     </ion-select>
   </ion-item>
 
+  <div class="ion-text-left ion-margin-start" *ngFor="let error of errorMessages.type">
+    <ng-container  *ngIf="formRegister.controls.type.hasError(error.type) && (formRegister.controls.type.dirty || formRegister.controls.type.touched)">
+      <ion-text  color="danger"><ion-icon name="add-circle"></ion-icon>{{error.message}}</ion-text>
+    </ng-container>
+  </div>
+
   <ion-item>
     <ion-label>
       <ion-icon name="person" slot="start" color="subtitulos"></ion-icon>
     </ion-label>
-    <ion-input type="text" placeholder="N° Cuenta" clearInput></ion-input>
+    <ion-input formControlName="doc" type="text" placeholder="N° Cuenta" clearInput></ion-input>
   </ion-item>
+
+  
+  <div class="ion-text-left ion-margin-start" *ngFor="let error of errorMessages.doc">
+    <ng-container  *ngIf="formRegister.controls.doc.hasError(error.type) && (formRegister.controls.doc.dirty || formRegister.controls.doc.touched)">
+      <ion-text  color="danger"><ion-icon name="add-circle"></ion-icon>{{error.message}}</ion-text>
+    </ng-container>
+  </div>
 
   <ion-item>
     <ion-label>
       <ion-icon name="mail" slot="start" color="subtitulos"></ion-icon>
     </ion-label>
-    <ion-input type="text" placeholder="Correo Eléctronico" clearInput></ion-input>
+    <ion-input formControlName="email" type="text" placeholder="Correo Eléctronico" clearInput></ion-input>
   </ion-item>
+
+  <div class="ion-text-left ion-margin-start" *ngFor="let error of errorMessages.email">
+    <ng-container  *ngIf="formRegister.controls.email.hasError(error.type) && (formRegister.controls.email.dirty || formRegister.controls.email.touched)">
+      <ion-text  color="danger"><ion-icon name="add-circle"></ion-icon>{{error.message}}</ion-text>
+    </ng-container>
+  </div>
 
   <ion-item>
     <ion-label>
       <ion-icon name="call" slot="start" color="subtitulos"></ion-icon>
     </ion-label>
-    <ion-input type="text" maxlength="9" placeholder="Celular" clearInput></ion-input>
+    <ion-input formControlName="tel" type="text" maxlength="9" placeholder="Celular" clearInput></ion-input>
   </ion-item>
+
+  <div class="ion-text-left ion-margin-start" *ngFor="let error of errorMessages.tel">
+    <ng-container  *ngIf="formRegister.controls.tel.hasError(error.type) && (formRegister.controls.tel.dirty || formRegister.controls.tel.touched)">
+      <ion-text  color="danger"><ion-icon name="add-circle"></ion-icon>{{error.message}}</ion-text>
+    </ng-container>
+  </div>
 
   <ion-item>
     <ion-label>
       <ion-icon name="unlock"  slot="start" color="subtitulos"></ion-icon>
     </ion-label>
-    <ion-input type="password" maxlength="15" placeholder="Ingresar Contraseña" clearInput></ion-input>
+    <ion-input clearOnEdit="false" formControlName="password" type="password" maxlength="15" placeholder="Ingresar Contraseña"></ion-input>
   </ion-item>
+
+  <div class="ion-text-left ion-margin-start" *ngFor="let error of errorMessages.password">
+    <ng-container  *ngIf="formRegister.controls.password.hasError(error.type) && (formRegister.controls.password.dirty || formRegister.controls.password.touched)">
+      <ion-text  color="danger"><ion-icon name="add-circle"></ion-icon>{{error.message}}</ion-text>
+    </ng-container>
+  </div>
 
   <ion-item>
     <ion-label>
       <ion-icon name="lock"  slot="start" color="subtitulos"></ion-icon>
     </ion-label>
-    <ion-input type="password" maxlength="15" placeholder="Repetir Contraseña" clearInput></ion-input>
+    <ion-input clearOnEdit="false" [type]="passwordType" formControlName="re_password" #passwordEyeRegister (ionChange)="toggleSendwordMode(formRegister.get('re_password').value)" type="password" maxlength="15" placeholder="Confirmar Contraseña"></ion-input>
+    <ion-icon *ngIf="booleanpass"  [name]="passwordIcon" color="subtitulos"  slot="end" item-right (click)="togglePasswordMode()"></ion-icon>
   </ion-item>
+
+  <div class="ion-text-left ion-margin-start" *ngFor="let error of errorMessages.re_password">
+    <ng-container  *ngIf="formRegister.controls.re_password.hasError(error.type) && (formRegister.controls.re_password.dirty || formRegister.controls.re_password.touched)">
+      <ion-text  color="danger"><ion-icon name="add-circle"></ion-icon>{{error.message}}</ion-text>
+    </ng-container>
+  </div>
 
   <p class="ion-text-center">Al <ion-text color="cambista"><strong>Crear una cuenta</strong></ion-text>, aceptas nuestros
     Términos, Condiciones y Politicas de uso de datos</p>
 
-  <ion-button expand="block" size="small" class="ion-padding" color="cambista"><ion-icon name="add-circle"></ion-icon> &nbsp;Crear Cuenta</ion-button>
+  <ion-button (click)="userRegister()" [disabled]="!formRegister.valid || disableButton" expand="block" size="small" class="ion-padding" color="cambista"><ion-icon name="add-circle"></ion-icon> &nbsp;Crear Cuenta</ion-button>
 
+</form>
   
 
 </ion-content>

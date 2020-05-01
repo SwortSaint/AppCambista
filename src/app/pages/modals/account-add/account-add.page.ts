@@ -2,11 +2,7 @@ import { Component} from '@angular/core';
 import { AlertsService } from 'src/app/services/alerts.service';
 import { Validators, FormBuilder, FormGroup } from '@angular/forms';
 import { HttpClient } from '@angular/common/http';
-import { environment } from 'src/environments/environment';
-import { finalize } from 'rxjs/operators';
-
-const URL = environment.url;
-const URLroute = environment.urlrouteaccount;
+import { AccountService } from 'src/app/services/account.service';
 
 @Component({
   selector: 'app-account-add',
@@ -19,71 +15,55 @@ export class AccountAddPage {
   public disableButton: any;
   public responseData: any;
 
-  constructor(public http: HttpClient, public formBuilder: FormBuilder, public alertsService: AlertsService) {
+  constructor(public http: HttpClient, public formBuilder: FormBuilder, public alertsService: AlertsService,public accountService: AccountService) {
       this.todo = this.formBuilder.group({
-      name: ['', [Validators.required,Validators.pattern("[a-zA-Z ]*")]],
-      doc: ['', [Validators.required,Validators.minLength(8), Validators.maxLength(11),Validators.pattern ("^[0-9]+$")]],
-      bank: ['', [Validators.required]],
-      type_number_bank: ['', [Validators.required]],
-      number_bank: ['', [Validators.required,Validators.pattern("^[0-9]+$")]],
-      type_money: ['', [Validators.required]]
+      name_account: ['', [Validators.required,Validators.pattern("[a-zA-Z ]*")]],
+      doc_account: ['', [Validators.required,Validators.minLength(8), Validators.maxLength(11),Validators.pattern ("^[0-9]+$")]],
+      bank_account: ['', [Validators.required]],
+      type_name_account: ['', [Validators.required]],
+      number_account_type: ['', [Validators.required,Validators.pattern("^[0-9]+$")]],
+      type_money_account: ['', [Validators.required]]
     });
 
    }
    
    public errorMessages = {
-    name: [
+    name_account: [
       { type: 'required', message: 'Campo es requerido' },
       { type: 'pattern', message: 'Solo caracteres alfanuméricos' }
     ],
-    doc: [
+    doc_account: [
       { type: 'required', message: 'Campo es requerido' },
       { type: 'pattern', message: 'Solo caracteres numericos' },
       { type: 'minlength', message: 'MÍnimo de caracteres es 8' }
     ],
-    number_bank:[
+    number_account_type:[
       { type: 'required', message: 'Campo es requerido' },
       { type: 'pattern', message: 'Solo caracteres numericos' }
     ]
   }
 
- async account(){
+  async account(){
 
     this.disableButton = true; 
 
-    let account = { 
-      "id" : 40,
-      "account_name" : this.todo.controls['name'].value , 
-      "account_doc"  : this.todo.controls['doc'].value, 
-      "account_bank" : this.todo.controls['bank'].value,
-      "account_type_number_bank" : this.todo.controls['type_number_bank'].value,
-      "account_number_bank" : this.todo.controls['number_bank'].value,
-      "account_type_money" : this.todo.controls['type_money'].value,
-      "setting": "account"
-    };
+    await this.alertsService.present();
 
-      await this.alertsService.showLoader();
+    const data = this.todo.value;
 
-      this.http.post(URL+URLroute, JSON.stringify(account)).pipe(
-        finalize(async () => {
-            await this.alertsService.hideLoader();
-            this.disableButton = false;  
-        })
-    )
-    .subscribe(data => {
+    const valid = await this.accountService.addAccount( data );
 
-              this.responseData = data;
+    await this.alertsService.dismiss();
 
-              if(this.responseData.error){
-                    this.alertsService.ErrorAlert("¡Error! Al Agregar Cuenta", "Rellene Nuevamente los Campos");
-              }else{
-                    this.alertsService.SuccessAlert("¡Felicidades!", "Cuenta Agregada Correctamente");
-              }
-        },(err) => {
-                    this.alertsService.ErrorAlert("¡Error!", "Compruebe su Conexión de Internet"); 
-        });
+      if( valid ){
+          this.alertsService.SuccessAlert("¡Felicidades!", "Cuenta Agregada Correctamente", 'Actualizando...');
+        }else{
+          this.alertsService.ErrorAlert("¡Error! Al Agregar Cuenta", "Verifigue Nuevamente los Campos");
+        }
 
-      }
+    this.disableButton = false;
+
+  }
 
  async dismissModal(){
     await this.alertsService.dissModal();

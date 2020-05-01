@@ -16,6 +16,7 @@ import { SocketIoModule, SocketIoConfig } from 'ngx-socket-io';
 import { IonicStorageModule } from '@ionic/storage';
 import { SocialSharing } from '@ionic-native/social-sharing/ngx';
 
+
 const config: SocketIoConfig = { url: 'http://localhost:5000', options: {} };
 
 @NgModule({

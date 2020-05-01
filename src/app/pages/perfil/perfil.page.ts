@@ -1,8 +1,11 @@
 import { Component, OnInit } from '@angular/core';
 import { UserService } from 'src/app/services/user.service';
+import { Usuario } from 'src/app/interfaces/interfaces';
 import { SocialSharing } from '@ionic-native/social-sharing/ngx';
 import { ModalController } from '@ionic/angular';
 import { TermsPage } from '../modals/terms/terms.page';
+import { AccountProfilePage } from '../modals/account-profile/account-profile.page'
+import { AlertsService } from 'src/app/services/alerts.service';
 
 @Component({
   selector: 'app-perfil',
@@ -11,6 +14,7 @@ import { TermsPage } from '../modals/terms/terms.page';
 })
 export class PerfilPage implements OnInit {
 
+  usuario: Usuario = {};
   objectSocial = {
     message : 'Conoce los beneficios que tienes al cambiar tus dolares y/o soles con cambista.com',
     file : null,
@@ -18,9 +22,10 @@ export class PerfilPage implements OnInit {
     subject : null
   };
 
-  constructor(private modalCtrl: ModalController, private socialSharing: SocialSharing, public userService: UserService) { }
+  constructor(public alertService: AlertsService, private modalCtrl: ModalController, private socialSharing: SocialSharing, public userService: UserService) { }
 
   ngOnInit() {
+    this.usuario = this.userService.getUsuario();
   }
 
   async termsModal(){
@@ -28,6 +33,17 @@ export class PerfilPage implements OnInit {
     const modal = await this.modalCtrl.create({ component: TermsPage });
     await modal.present();
  
+   }
+
+   async profileModal(){
+
+    const modal = await this.modalCtrl.create({ component: AccountProfilePage });
+    await modal.present();
+ 
+   }
+
+   async changePassword(){
+    await this.alertService.presentAlertPrompt();
    }
 
   share(){

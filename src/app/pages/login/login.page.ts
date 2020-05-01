@@ -71,15 +71,23 @@ export class LoginPage implements OnInit {
 
     this.disableButton = true; 
 
+    await this.alertsService.present();
+
     const valid = await this.userService.login( this.formlogin.controls['email'].value, this.formlogin.controls['password'].value);
 
+    await this.alertsService.dismiss();
+    
       if( valid ){
-        this.menuCtrl.enable(true);
-        this.natCtrl.navigateRoot( '/inicio', { animated: true } );
+      await this.alertsService.presentLoadingLogin('Bienvenido...').then(() => 
+      this.natCtrl.navigateRoot( '/inicio', { animated: true } ));
+      this.menuCtrl.enable(true);
+
       }else{
-        this.disableButton = false; 
         this.alertsService.ErrorAlert("!Error! Al Iniciar Sesión", "Usuario y/o Contraseña no Válidos");
+
       }
+
+      this.disableButton = false;
   }
 
   async addModal(){

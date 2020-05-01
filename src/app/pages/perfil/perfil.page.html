@@ -3,7 +3,7 @@
   <ion-content>
       <h5 class="ion-text-center">¡Editar tu información personal!</h5>
 
-      <ion-item button>
+      <ion-item button (click)="profileModal()">
           <ion-icon name="contact" slot="start" color="subtitulos"></ion-icon>
           Datos Personales
       </ion-item> 
@@ -23,7 +23,7 @@
           Términos y Condiciones
       </ion-item> 
 
-      <ion-item button>
+      <ion-item button (click)="changePassword()">
           <ion-icon name="key" slot="start" color="subtitulos"></ion-icon>
           Cambiar Contraseña
       </ion-item> 

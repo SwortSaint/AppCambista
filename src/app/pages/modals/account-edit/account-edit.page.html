@@ -11,19 +11,19 @@
   <form [formGroup]="todo">
 
     <ion-item>
-      <ion-input type="text" formControlName="name" placeholder="Nombre y/o Descripción de Cuenta" clearInput></ion-input>
+      <ion-input type="text" formControlName="name_account" placeholder="Nombre y/o Descripción de Cuenta" clearInput></ion-input>
     </ion-item>
   
     <ion-item>
-      <ion-input type="text"  formControlName="doc" maxlength="12" placeholder="Doc. Identidad" clearInput></ion-input>
+      <ion-input type="text"  formControlName="doc_account" maxlength="12" placeholder="Doc. Identidad" clearInput></ion-input>
     </ion-item>
   
     <ion-item>
-      <ion-input type="text" formControlName="number_bank" placeholder="N° Cuenta" clearInput></ion-input>
+      <ion-input type="text" formControlName="number_account_type" placeholder="N° Cuenta" clearInput></ion-input>
     </ion-item>
 
-    <div class="ion-text-left ion-margin-start" *ngFor="let error of errorMessages.number_bank">
-      <ng-container  *ngIf="todo.controls.number_bank.hasError(error.type) && (todo.controls.number_bank.dirty || todo.controls.number_bank.touched)">
+    <div class="ion-text-left ion-margin-start" *ngFor="let error of errorMessages.number_account_type">
+      <ng-container  *ngIf="todo.controls.number_account_type.hasError(error.type) && (todo.controls.number_account_type.dirty || todo.controls.number_account_type.touched)">
         <ion-text  color="danger"><ion-icon name="add-circle"></ion-icon>{{error.message}}</ion-text>
       </ng-container>
     </div>
@@ -31,7 +31,7 @@
   
       <ion-item>
         <ion-label>Banco</ion-label>
-        <ion-select formControlName="bank" interface="popover" placeholder="Seleccione" >
+        <ion-select formControlName="bank_account" interface="popover" placeholder="Seleccione" >
           <ion-select-option  *ngIf="list['bank']==typebanks['BCP']" [selected]="true" value="BCP">BCP</ion-select-option>
           <ion-select-option  *ngIf="list['bank']==typebanks['BBVA']" [selected]="true" value="BBVA">BBVA</ion-select-option>
           <ion-select-option  *ngIf="list['bank']==typebanks['INTERBANK']" [selected]="true" value="INTERBANK">INTERBANK</ion-select-option>
@@ -46,7 +46,7 @@
   
       <ion-item>
         <ion-label>Tipo de Cuenta</ion-label>
-        <ion-select formControlName="type_number_bank" interface="popover" placeholder="Seleccione">
+        <ion-select formControlName="type_name_account" interface="popover" placeholder="Seleccione">
           <ion-select-option  *ngIf="list['type_number_bank']==typenumberbank['CORRIENTE']" [selected]="true" value="CORRIENTE">Corriente</ion-select-option>
           <ion-select-option  *ngIf="list['type_number_bank']==typenumberbank['AHORRO']" [selected]="true" value="AHORRO">Ahorro</ion-select-option>
         </ion-select>
@@ -54,7 +54,7 @@
 
       <ion-item>
         <ion-label>Tipo de Moneda</ion-label>
-        <ion-select formControlName="type_money" interface="popover" placeholder="Seleccione">
+        <ion-select formControlName="type_money_account" interface="popover" placeholder="Seleccione">
           <ion-select-option *ngIf="list['type_money']==typemoney['SOLES']" [selected]="true" value="SOLES">Soles</ion-select-option>
           <ion-select-option *ngIf="list['type_money']==typemoney['DOLARES']" [selected]="true" value="DOLARES">Dolares</ion-select-option>
         </ion-select>

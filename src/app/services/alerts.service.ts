@@ -1,12 +1,7 @@
-import { Component } from '@angular/core';
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { AlertController, LoadingController, ModalController } from '@ionic/angular';
-import { environment } from 'src/environments/environment';
-import { finalize } from 'rxjs/operators';
-
-const URL = environment.url;
-const URLroute = environment.urlrouteaccount;
+import { UserService } from './user.service';
 
 @Injectable({
   providedIn: 'root'
@@ -15,9 +10,14 @@ export class AlertsService {
 
   public responseData: any;
 
-  constructor(public modalCtrl: ModalController,public http: HttpClient, public alertController: AlertController, public loadingController: LoadingController) { }
+  constructor(public userService: UserService, public modalCtrl: ModalController,public http: HttpClient, public alertController: AlertController, public loadingController: LoadingController) { }
 
-    async SuccessAlert(header: string, message: string) {
+
+    /**
+     * FUNCION PARA INICIAR SESION 
+     **/
+
+    async SuccessLogin(header: string, message: string, messagetext: string) {
 
       const alert = await this.alertController.create({
         header: header,
@@ -25,7 +25,7 @@ export class AlertsService {
         buttons: [{
           text: 'Aceptar',
           handler: () => {
-            alert.dismiss().then(() => { this.presentLoading(); });
+            alert.dismiss().then(() => { this.presentLoadingLogin( messagetext ); });
           }
         }],
         backdropDismiss: false
@@ -33,6 +33,32 @@ export class AlertsService {
   
       await alert.present();
     }
+
+
+    /**
+     * FUNCION PARA ALERTAS CON STATUS SUCCESS 
+     **/
+
+    async SuccessAlert(header: string, message: string, messagetext: string) {
+
+      const alert = await this.alertController.create({
+        header: header,
+        message: message,
+        buttons: [{
+          text: 'Aceptar',
+          handler: () => {
+            alert.dismiss().then(() => { this.presentLoading( messagetext ); });
+          }
+        }],
+        backdropDismiss: false
+      });
+  
+      await alert.present();
+    }
+
+    /**
+     * FUNCION PARA ALERTAS CON STATUS ERROR 
+     **/
 
     async ErrorAlert(header: string, message: string) {
 
@@ -46,78 +72,121 @@ export class AlertsService {
       await alert.present();
     }
 
-    async presentLoading() {
+
+    /**
+     * FUNCION DE ION-LOADING EN INICIAR SESSION 
+     **/
+
+    async presentLoadingLogin( messagetext: string) {
       
-          this.loadingController.create({ message: 'Actualizando...', duration: 1000, spinner: 'circles',
-            backdropDismiss: false }).then((res) => {
-              res.present();
+      const resp = await this.loadingController.create({
+        message: messagetext,
+        duration: 1000,
+        spinner: 'circles'
+      });
+
+      await resp.present();
+
+    }
+
+    /**
+     * FUNCION DE ION-LOADING EN LOS DEMAS MODULOS
+     **/
+
+    async presentLoading( messagetext: string) {
       
-              res.onDidDismiss().then((dis) => {
-                this.modalCtrl.dismiss();
-              });
-            });
+      const resp = await this.loadingController.create({
+        message: messagetext,
+        duration: 1000,
+        spinner: 'circles'
+      });
+
+      await resp.present();
+
+      await resp.onDidDismiss().then((dis) => {
+        this.modalCtrl.dismiss();
+      });
     }
 
-    async showLoader() {
-      const loading = await this.loadingController.create({message: 'Cargando...', spinner: 'circles' });
-      return await loading.present();
-    }
-  
-    async hideLoader() {
-        return this.loadingController.dismiss();
-    }
+    /**
+     * FUNCION PARA CAMBIAR CONTRASEÑA
+     **/
 
-    async presentAlertConfirm(list, items, messageSuccess: string,messageSuccessAccount: string,
-      messageErrorAccountHeader: string, messageErrorAccountTitle: string, messageErrorRedHeader: string,
-      messageErrorRedTitle: string, site : string,messagePresentAlertAccount: string, params) {
-
+    async presentAlertPrompt() {
       const alert = await this.alertController.create({
-        header: messagePresentAlertAccount,
-        message: 'Recuerde que al Seleccionar <strong>SI</strong>, Borrara Automaticamente el Registro',
-        buttons: [
+        inputs: [
           {
-            text: 'No',
-            cssClass: 'alert-button',
+            name: 'pass_now',
+            placeholder: 'Contraseña actual',
+            type: 'password'
           },
           {
-            text: 'Si',
-            handler: () => {
+            name: 'pass_new',
+            placeholder: 'Contraseña nueva',
+            type: 'password'
+          }
+        ],
+        buttons: [
+          {
+            text: 'Cancelar'
+          }, {
+            text: 'Aceptar',
+            handler: async (data) => {
+              if (data.pass_now !== "" && data.pass_new !== "" && data.pass_now == data.pass_new && data.pass_new == data.pass_now) {
+                
+                await this.present();
 
-              let index = items.indexOf(list);
-  
-             this.showLoader();
-  
-              if(index > -1){
-                 this.http.post(URL+site, JSON.stringify(params)).pipe(
-                  finalize(async () => {
-                      this.hideLoader();
-                  })
-              ).subscribe(data => {
-  
-                 this.responseData = data;
-          
-                        if(this.responseData.error){
-                            this.ErrorAlert(messageErrorAccountHeader, messageErrorAccountTitle); 
-                        }else{
-                            items.splice(index, 1);
-                            this.ErrorAlert(messageSuccess, messageSuccessAccount);
-                        }
-                  },(err) => {
-                            this.ErrorAlert(messageErrorRedHeader, messageErrorRedTitle);
-                  });
-    
+                const valid = this.userService.userChange( data.pass_now );
+
+                await this.dismiss();
+
+                if( valid ){
+                  this.SuccessLogin("¡Felicidades!", "Contraseña Cambiada Correctamente", 'Actualizando...'); 
+                }else{
+                  this.ErrorAlert("¡Error! Al Cambiar Contraseña", "Verifigue Nuevamente los Campos");
+                }
+
+              }else{
+                return false;
               }
-  
             }
-          }],
-          backdropDismiss: false
+          }
+        ],
+        backdropDismiss: false
       });
   
       await alert.present();
     }
 
+
+    async present() {
+      // Dismiss all pending loaders before creating the new one
+      await this.dismiss();
+  
+      await this.loadingController
+        .create({message: 'Cargando...', spinner: 'circles' })
+        .then(res => {
+          res.present();
+        });
+    }
+  
+    /**
+     * Dismiss all the pending loaders, if any
+     **/
+    async dismiss() {
+      while (await this.loadingController.getTop() !== undefined) {
+        await this.loadingController.dismiss();
+      }
+    }
+
+
+    /**
+     * FUNCION PARA CERRAR MODALES
+     **/
+
     async dissModal() {
       await this.modalCtrl.dismiss();
     }
+
   
 }

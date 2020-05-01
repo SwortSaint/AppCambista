@@ -2,7 +2,7 @@
 
   <ion-content>
  
-    <h5 class="ion-text-center">Listado de Cuentas Bancarias</h5>
+    <h5 class="ion-text-center">Listado de las Transacciones Realizadas</h5>
     <ion-searchbar class="capitalize" no-shadow placeholder="Ingresar su Busqueda" mode="md" animated  (ionChange)="onSearchInput( $event )"></ion-searchbar>
     
     <ion-segment color="cambista" (ionChange)="segmentChanged($event)">
@@ -11,21 +11,21 @@
         <ion-label>Todos</ion-label>
       </ion-segment-button>
 
-      <ion-segment-button value="0">
+      <ion-segment-button value="PENDIENTE">
         <ion-label>Pendiente</ion-label>
       </ion-segment-button>
 
-      <ion-segment-button value="1">
+      <ion-segment-button value="COMPLETADO">
         <ion-label>Completado</ion-label>
       </ion-segment-button>
 
-      <ion-segment-button value="2">
+      <ion-segment-button value="CANCELADO">
         <ion-label>Cancelado</ion-label>
       </ion-segment-button>
     </ion-segment>
 
     <ion-list *ngIf="!contentloaded" >
-      <ion-item *ngFor="let account of [1,1,1,1,1,1]" class="animated flash slow infinite">
+      <ion-item *ngFor="let transaction of [1,1,1,1,1,1]" class="animated flash slow infinite">
   
         <ion-thumbnail slot="start">
           <ion-skeleton-text class="animated flash slow infinite"></ion-skeleton-text>
@@ -42,29 +42,29 @@
   
     </ion-list>  
 
-    <div *ngIf="searching && (items | filterTransaction :  publisher:'confirmation').length > 0" class="spinner-container">
+    <div *ngIf="searching && (transaction | filterTransaction :  publisher:'status').length > 0" class="spinner-container">
       <ion-spinner name="lines"></ion-spinner>
     </div>
    
-    <ion-item-sliding *ngFor="let item of items  | filterSearchTransaction: textSearch | filterTransaction: publisher:'confirmation'" [ngSwitch]="item.confirmation">
+    <ion-item-sliding *ngFor="let item of transaction | filterSearchTransaction: textSearch | filterTransaction: publisher:'status'; let i = index" [ngSwitch]="item.status">
       <ion-item lines="none">
         <ion-avatar slot="start">
           <img src="assets/imgs/ionic3-ico.png">
         </ion-avatar>
         <ion-label>
-          <h2>Transacción N°: <span>{{ item.id_transaccion }}</span></h2>
+          <h2>Transacción N°: <span>{{i + 1 }}</span></h2>
           <p>Cuenta de Recepción: <span>{{ item.user_account_reception }}</span></p>
-          <p>N° Operación: <span >{{ item.number_operation | titlecase}}</span></p>
+          <p>N° Operación: <span >{{ item.number_operation }}</span></p>
           <p>Monto que Envia: <span >{{ item.cash_up }}</span></p>
           <p>Monto que Recibe:  <span>{{item.cash_down}}</span></p>
-          <p *ngSwitchCase="'0'" >Status: <strong style="color:#ff9600;"> Pendiente</strong></p>
-          <p *ngSwitchCase="'1'" >Status: <strong style="color:#008282;"> Confirmado</strong></p>
-          <p *ngSwitchCase="'2'" >Status: <strong style="color:#f53d3d;"> Cancelado</strong></p>
+          <p *ngSwitchCase="'PENDIENTE'" >Status: <strong style="color:#ff9600;"> <ion-icon slot="start" name="md-radio-button-on"></ion-icon> Pendiente</strong></p>
+          <p *ngSwitchCase="'COMPLETADO'" >Status: <strong style="color:#008282;"> <ion-icon slot="start" name="ios-checkmark-circle"></ion-icon> Confirmado</strong></p>
+          <p *ngSwitchCase="'CANCELADO'" >Status: <strong style="color:#f53d3d;"> <ion-icon slot="start" name="ios-close-circle"></ion-icon> Cancelado</strong></p>
         </ion-label>
-        <ion-icon *ngSwitchCase="'0'" name="arrow-forward" color="subtitulos" slot="end"></ion-icon>
+        <ion-icon *ngSwitchCase="'PENDIENTE'" name="arrow-forward" color="subtitulos" slot="end"></ion-icon>
       </ion-item>
   
-      <ion-item-options *ngSwitchCase="'0'">
+      <ion-item-options *ngSwitchCase="'PENDIENTE'">
         <ion-item-option class="ion-text-center" style="background:#415b5c;" (click)="delTransaction(item)"> 
           <ion-icon slot="top" name="trash"></ion-icon>
           Cancelar <br>Transacción
@@ -72,9 +72,9 @@
       </ion-item-options>
     </ion-item-sliding>
 
-    <h6 *ngIf="(items | filterTransaction :  publisher:'confirmation').length === 0" class="ion-text-center">¡No se han encontrado registros!</h6>
-    <h6 *ngIf="(items | filterTransaction :  publisher:'confirmation').length === 0" class="ion-text-center subtitulo" >¡Agrega tus Cuentas Bancarias y Empieza a Cambiar!</h6>
-    <h6 *ngIf="(items | filterTransaction :  publisher:'confirmation').length > 0 && (items | filterSearchTransaction : textSearch).length === 0" class="ion-text-center">¡No se han encontrado registros!</h6>
+    <h6 *ngIf="(transaction | filterTransaction :  publisher:'status').length === 0" class="ion-text-center">¡No se han encontrado registros!</h6>
+    <h6 *ngIf="(transaction | filterTransaction :  publisher:'status').length === 0" class="ion-text-center subtitulo" >¡Agrega tus Cuentas Bancarias y Empieza a Cambiar!</h6>
+    <h6 *ngIf="(transaction | filterTransaction :  publisher:'status').length > 0 && (transaction | filterSearchTransaction : textSearch).length === 0" class="ion-text-center">¡No se han encontrado registros!</h6>
   </ion-content>
 
  

@@ -14,7 +14,7 @@ const url = environment.urlrouterserver;
 export class UserService {
 
   token: string = null;
-  usuario: Usuario = {};
+  private usuario: Usuario = {};
 
   constructor(private loadingController: LoadingController, private alertController: AlertController, private http: HttpClient, private storage: Storage, private naCtrl: NavController) { }
 
@@ -26,8 +26,7 @@ export class UserService {
     return new Promise( resolve =>{
       
         this.http.post(`${ url }/user/login`, data).subscribe( async resp =>{
-          console.log(resp);
-
+          
           if( resp['ok'] ){
             await this.guardarToken( resp['token'] );
             resolve(true);
@@ -40,6 +39,68 @@ export class UserService {
     })
   
 
+  }
+
+  userUpdate( data ){
+    const headers = new HttpHeaders({
+      'x-token': this.token
+    });
+    
+    return new Promise( resolve =>{
+
+    this.http.post(`${ url }/user/update`, data, { headers }).subscribe( async resp =>{
+          if( resp['ok'] ){
+            await this.guardarToken( resp['token'] );
+            resolve(true);
+          }else{
+            this.token = null;
+            this.storage.clear();
+            resolve(false);
+          }
+    });
+   });
+  }
+
+  userRegister(typedocument: string, numberdocument: Number, telephone: Number, email: string, password: string){
+    
+    const data = {typedocument , numberdocument, telephone, email, password};
+    
+    return new Promise( resolve =>{
+      this.http.post(`${ url }/user/create`, data).subscribe( async resp =>{
+
+        if( resp['ok'] ){
+          await this.guardarToken( resp['token'] );
+          resolve(true);
+        }else{
+          this.token = null;
+          this.storage.clear();
+          resolve(false);
+        }
+
+      });
+    });
+  }
+
+  userChange( params ){
+    const headers = new HttpHeaders({
+      'x-token': this.token
+    });
+
+    const data = {password: params };
+    
+    return new Promise( resolve =>{
+
+    this.http.post(`${ url }/user/changepassword`, data, { headers }).subscribe( async resp =>{
+          if( resp['ok'] ){
+            await this.guardarToken( resp['token'] );
+            resolve(true);
+          }else{
+            this.token = null;
+            this.storage.clear();
+            resolve(false);
+          }
+    });
+   });
   }
 
   
@@ -123,5 +184,14 @@ export class UserService {
         });
       });
 }
+
+  getUsuario(){
+
+    if( !this.usuario._id ){
+        this.validaToken();
+    }
+
+    return { ...this.usuario};
+  }
 
 }

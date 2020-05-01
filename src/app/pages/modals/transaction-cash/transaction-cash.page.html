@@ -1,0 +1,27 @@
+<ion-header>
+  <ion-toolbar color="cambista">
+    <ion-title>Estado de la Transacción</ion-title>
+    <ion-buttons slot="start">
+      <ion-button (click)="dismissModal()"><ion-icon class="icon-size" name="arrow-back" ></ion-icon>Atrás</ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="ion-padding" >
+
+  <form [formGroup]="formulario" >
+    
+    <ion-item>
+      <ion-input type="text" formControlName="number_operation" placeholder="Ingrese N° Operación" clearInput></ion-input>
+    </ion-item>
+
+    <div class="ion-text-left ion-margin-start" *ngFor="let error of errorMessages.number_operation">
+      <ng-container  *ngIf="formulario.controls.number_operation.hasError(error.type) && (formulario.controls.number_operation.dirty || formulario.controls.number_operation.touched)">
+        <ion-text  color="danger"><ion-icon name="add-circle"></ion-icon>{{error.message}}</ion-text>
+      </ng-container>
+    </div>  
+
+      <ion-button class="ion-padding"  (click)= "sendOperation()" [disabled]="!formulario.valid || disableButton" color="cambista" size="small" expand="block"> <ion-icon name="checkmark-circle"></ion-icon>&nbsp; Enviar Operación</ion-button>
+  </form>
+
+</ion-content>

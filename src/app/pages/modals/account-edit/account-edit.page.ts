@@ -2,12 +2,8 @@ import { Component} from '@angular/core';
 import { AlertsService } from 'src/app/services/alerts.service';
 import { Validators, FormBuilder, FormGroup } from '@angular/forms';
 import { HttpClient } from '@angular/common/http';
-import { environment } from 'src/environments/environment';
 import { NavParams } from '@ionic/angular';
-import { finalize } from 'rxjs/operators';
-
-const URL = environment.url;
-const URLroute = environment.urlrouteaccount;
+import { AccountService } from 'src/app/services/account.service';
 
 @Component({
   selector: 'app-account-edit',
@@ -25,7 +21,7 @@ export class AccountEditPage {
   typebanks = [];
 
 
-  constructor(public navParams:NavParams, public http: HttpClient, public formBuilder: FormBuilder, public alertsService: AlertsService) {
+  constructor(public accountService: AccountService, public navParams:NavParams, public http: HttpClient, public formBuilder: FormBuilder, public alertsService: AlertsService) {
     this.list = this.navParams.get('list');
     this.todo = this.updateForm();
     this.typemoney = ["SOLES","DOLARES"];
@@ -36,48 +32,36 @@ export class AccountEditPage {
    public updateForm(){
    
     return this.formBuilder.group({
-      name:[{value:this.list['name_account'],disabled: true}],
-      doc: [{value:this.list['doc_account'],disabled: true}],
-      bank: [{value:this.list['bank_account'],disabled: true}],
-      type_number_bank: [this.list['type_name_account']],
-      number_bank: [this.list['number_account_type'], [Validators.required,Validators.pattern("^[0-9]+$")]],
-      type_money: [this.list['type_money_account']],
-      id_account_user: this.list['id_account_user'],
-      setting : "updaccount"
+      _id: [this.list['_id']],
+      name_account:[{value:this.list['name_account'],disabled: true}],
+      doc_account: [{value:this.list['doc_account'],disabled: true}],
+      bank_account: [{value:this.list['bank_account'],disabled: true}],
+      type_name_account: [this.list['type_name_account']],
+      number_account_type: [this.list['number_account_type'], [Validators.required,Validators.pattern("^[0-9]+$")]],
+      type_money_account: [this.list['type_money_account']],
     });
 
   }
 
- async updateAccount(){
-      this.disableButton = true; 
-      this.todo.addControl('new', this.formBuilder.group({
-      name: [this.todo.controls.name.value, Validators.required],
-      doc: [this.todo.controls.doc.value, Validators.required],
-      bank: [this.todo.controls.bank.value, Validators.required]
-    }));
+  async updateAccount(){
+
+    this.disableButton = true; 
+
+    await this.alertsService.present();
 
     const data = this.todo.value;
 
-    await this.alertsService.showLoader();
+    const valid = await this.accountService.editAccount( data);
 
-    this.http.post(URL+URLroute, JSON.stringify(data)).pipe(
-      finalize(async () => {
-          await this.alertsService.hideLoader();
-      })).subscribe(data => {
+    await this.alertsService.dismiss();
 
-            this.responseData = data;
+      if( valid ){
+          this.alertsService.SuccessAlert("¡Felicidades!", "Cuenta Editada Correctamente", 'Actualizando...');
+        }else{
+          this.alertsService.ErrorAlert("¡Error! Al Editar Cuenta", "Verifigue Nuevamente los Campos");
+        }
 
-            if(this.responseData.error){
-                  this.alertsService.ErrorAlert("¡Error! Al Editar Cuenta", "Verifigue Nuevamente los Campos");
-                  this.disableButton = false;  
-            }else{
-                  this.alertsService.SuccessAlert("¡Felicidades!", "Cuenta Edita Correctamente");
-                  this.disableButton = false;  
-            }
-      },(err) => {
-                  this.alertsService.ErrorAlert("¡Error!", "Compruebe su Conexión de Internet");
-                  this.disableButton = false;  
-      });
+    this.disableButton = false;
 
   }
 

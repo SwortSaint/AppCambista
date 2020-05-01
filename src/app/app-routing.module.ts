@@ -40,11 +40,26 @@ const routes: Routes = [
   },
   {
     path: 'terms',
-    loadChildren: () => import('./pages/modals/terms/terms.module').then( m => m.TermsPageModule)
+    loadChildren: () => import('./pages/modals/terms/terms.module').then( m => m.TermsPageModule),
+    canLoad: [ UserGuard ]
   },
   {
     path: 'account-user-register',
-    loadChildren: () => import('./pages/modals/account-user-register/account-user-register.module').then( m => m.AccountUserRegisterPageModule)
+    loadChildren: () => import('./pages/modals/account-user-register/account-user-register.module').then( m => m.AccountUserRegisterPageModule),
+    canLoad: [ UserGuard ]
+  },
+  {
+    path: 'account-profile',
+    loadChildren: () => import('./pages/modals/account-profile/account-profile.module').then( m => m.AccountProfilePageModule),
+    canLoad: [ UserGuard ]
+  },
+  {
+    path: 'change-cash',
+    loadChildren: () => import('./pages/modals/change-cash/change-cash.module').then( m => m.ChangeCashPageModule)
+  },
+  {
+    path: 'transaction-cash',
+    loadChildren: () => import('./pages/modals/transaction-cash/transaction-cash.module').then( m => m.TransactionCashPageModule)
   },
 ];
 

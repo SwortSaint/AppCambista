@@ -11,38 +11,38 @@
 <form [formGroup]="todo">
 
   <ion-item>
-    <ion-input type="text" formControlName="name" placeholder="Nombre y/o Descripción de Cuenta" clearInput></ion-input>
+    <ion-input type="text" formControlName="name_account" placeholder="Nombre y/o Descripción de Cuenta" clearInput></ion-input>
   </ion-item>
 
-  <div class="ion-text-left ion-margin-start" *ngFor="let error of errorMessages.name">
-    <ng-container  *ngIf="todo.controls.name.hasError(error.type) && (todo.controls.name.dirty || todo.controls.name.touched)">
+  <div class="ion-text-left ion-margin-start" *ngFor="let error of errorMessages.name_account">
+    <ng-container  *ngIf="todo.controls.name_account.hasError(error.type) && (todo.controls.name_account.dirty || todo.controls.name_account.touched)">
       <ion-text  color="danger"><ion-icon name="add-circle"></ion-icon>{{error.message}}</ion-text>
     </ng-container>
   </div>
 
   <ion-item>
-    <ion-input type="text"  formControlName="doc" maxlength="12" placeholder="Doc. Identidad" clearInput></ion-input>
+    <ion-input type="text"  formControlName="doc_account" maxlength="12" placeholder="Doc. Identidad" clearInput></ion-input>
   </ion-item>
 
-  <div class="ion-text-left ion-margin-start" *ngFor="let error of errorMessages.doc">
-    <ng-container  *ngIf="todo.controls.doc.hasError(error.type) && (todo.controls.doc.dirty || todo.controls.doc.touched)">
+  <div class="ion-text-left ion-margin-start" *ngFor="let error of errorMessages.doc_account">
+    <ng-container  *ngIf="todo.controls.doc_account.hasError(error.type) && (todo.controls.doc_account.dirty || todo.controls.doc_account.touched)">
       <ion-text  color="danger"><ion-icon name="add-circle"></ion-icon>{{error.message}}</ion-text>
     </ng-container>
   </div>
 
   <ion-item>
-    <ion-input type="text" formControlName="number_bank" placeholder="N° Cuenta" clearInput></ion-input>
+    <ion-input type="text" formControlName="number_account_type" placeholder="N° Cuenta" clearInput></ion-input>
   </ion-item>
 
-  <div class="ion-text-left ion-margin-start" *ngFor="let error of errorMessages.number_bank">
-    <ng-container  *ngIf="todo.controls.number_bank.hasError(error.type) && (todo.controls.number_bank.dirty || todo.controls.number_bank.touched)">
+  <div class="ion-text-left ion-margin-start" *ngFor="let error of errorMessages.number_account_type">
+    <ng-container  *ngIf="todo.controls.number_account_type.hasError(error.type) && (todo.controls.number_account_type.dirty || todo.controls.number_account_type.touched)">
       <ion-text  color="danger"><ion-icon name="add-circle"></ion-icon>{{error.message}}</ion-text>
     </ng-container>
   </div>
 
     <ion-item>
       <ion-label>Banco</ion-label>
-      <ion-select formControlName="bank" interface="popover" placeholder="Seleccione">
+      <ion-select formControlName="bank_account" interface="popover" placeholder="Seleccione">
         <ion-select-option value="BCP">BCP</ion-select-option>
         <ion-select-option value="BBVA">BBVA</ion-select-option>
         <ion-select-option value="INTERBANK">INTERBANK</ion-select-option>
@@ -57,7 +57,7 @@
 
     <ion-item>
       <ion-label>Tipo de Cuenta</ion-label>
-      <ion-select formControlName="type_number_bank" interface="popover" placeholder="Seleccione">
+      <ion-select formControlName="type_name_account" interface="popover" placeholder="Seleccione">
         <ion-select-option value="CORRIENTE">Corriente</ion-select-option>
         <ion-select-option value="AHORRO">Ahorro</ion-select-option>
       </ion-select>
@@ -65,7 +65,7 @@
 
     <ion-item>
       <ion-label>Tipo de Moneda</ion-label>
-      <ion-select formControlName="type_money" interface="popover" placeholder="Seleccione">
+      <ion-select formControlName="type_money_account" interface="popover" placeholder="Seleccione">
         <ion-select-option value="SOLES">Soles</ion-select-option>
         <ion-select-option value="DOLARES">Dolares</ion-select-option>
       </ion-select>

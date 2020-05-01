@@ -1,8 +1,7 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
-import { DataService } from 'src/app/services/data.service';
 import { IonSegment } from '@ionic/angular';
-import { AlertsService } from 'src/app/services/alerts.service';
-import { environment } from 'src/environments/environment';
+import { TransactionService } from 'src/app/services/transaction.service';
+import { Transaction } from 'src/app/interfaces/interfaces';
 
 
 @Component({
@@ -14,13 +13,13 @@ export class TransactionPage implements OnInit {
 
   @ViewChild( IonSegment, null ) segment: IonSegment;
 
-  public items: any[] = [];
   public publisher= '';
   public contentloaded = false;
   public textSearch = '';
   public searching: any = false;
+  transaction: Transaction[] = [];
 
-  constructor(public dataService: DataService, public alertsService: AlertsService, ) { }
+  constructor(public transactionService: TransactionService) { }
 
   ngOnInit() {
     this.segment.value = 'todos';
@@ -29,6 +28,11 @@ export class TransactionPage implements OnInit {
     setTimeout(() => {
       this.contentloaded = true;
     }, 1200);
+
+    this.transactionService.getSocketCancelTransaction().subscribe( () =>{
+      this.transaction = [];
+      this.setFilteredItems();
+    });
   }
 
   onSearchInput( event ){
@@ -43,7 +47,7 @@ export class TransactionPage implements OnInit {
   }
 
   setFilteredItems() {
-    this.dataService.getTransaction().subscribe( items =>{ this.items = items;});
+    this.transactionService.getTransaction().subscribe( resp =>{ this.transaction.push(... resp.transaction)});
   }
 
   segmentChanged(event){
@@ -57,22 +61,10 @@ export class TransactionPage implements OnInit {
     this.publisher = valueSegmento;
   }
 
-  async delTransaction(list){
+   async delTransaction(list){
 
-    let params = {
-      "id_transaccion": list.id_transaccion,
-      "setting": "delete"
-    }
 
-    await this.alertsService.presentAlertConfirm(list, this.items,environment.messageSuccess,
-      environment.messageSuccessTransaction,
-      environment.messageErrorTransactionHeader,
-      environment.messageErrorTransactionTitle,
-      environment.messageErrorRedHeader,
-      environment.messageErrorRedTitle,
-      environment.urlroutetransaction,
-      environment.messagePresentTransaction,
-      params)
+  await this.transactionService.presentAlertConfirm(list)
       }
 
 }

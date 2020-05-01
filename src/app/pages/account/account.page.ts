@@ -1,30 +1,45 @@
-import { Component} from '@angular/core';
+import { Component, OnInit} from '@angular/core';
 import { DataService } from 'src/app/services/data.service';
 import { ModalController } from '@ionic/angular';
 import { AccountAddPage } from '../modals/account-add/account-add.page';
 import { AccountEditPage } from '../modals/account-edit/account-edit.page';
 import { AlertsService } from 'src/app/services/alerts.service';
-import { environment } from 'src/environments/environment';
-
+import { UserService } from 'src/app/services/user.service';
+import { Account } from '../../interfaces/interfaces';
+import { AccountService } from 'src/app/services/account.service';
 
 @Component({
   selector: 'app-account',
   templateUrl: './account.page.html',
   styleUrls: ['./account.page.scss'],
 })
-export class AccountPage {
+export class AccountPage implements OnInit{
 
   public textSearch = '';
-  public items: any[] = [];
   public searching: any = false;
   contentloaded = false;
+  account: Account[] = [];
 
-  constructor(public alertsService: AlertsService, public dataService: DataService, public modalCtrl: ModalController ) {
+  constructor(public userService: UserService,public accountService: AccountService,public alertsService: AlertsService, public dataService: DataService, public modalCtrl: ModalController ) {
     this.setFilteredItems();
 
     setTimeout(() => {
       this.contentloaded = true;
     }, 1200);
+
+  }
+
+  ngOnInit() {
+
+    this.accountService.newAccount.subscribe( account =>{
+       this.account.push( account );
+    });
+
+    ///FUNCTION DEL SERVICE PARA LLAMAR EL SOCKET
+    this.accountService.getSocketAccount().subscribe( () =>{
+      this.account = [];
+      this.setFilteredItems();
+    });
 
   }
 
@@ -41,7 +56,7 @@ export class AccountPage {
 
   setFilteredItems() {
 
-    this.dataService.getAccount().subscribe( items =>{ this.items = items; });
+    this.accountService.getAccount().subscribe( resp =>{ this.account.push( ...resp.account); });
 
   }
 
@@ -51,7 +66,8 @@ export class AccountPage {
    const modal = await this.modalCtrl.create({ 
      component: AccountEditPage,
      componentProps:{
-       list: list
+       list,
+       index : this.account
      }});
 
    await modal.present();
@@ -70,20 +86,7 @@ export class AccountPage {
 
   async delAcount(list){
 
-    let params = {
-      "id_account_user": list.id_account_user,
-      "setting": "delaccount"
-    }
-
-   await this.alertsService.presentAlertConfirm(list, this.items,environment.messageSuccess,
-            environment.messageSuccessAccount,
-            environment.messageErrorAccountHeader,
-            environment.messageErrorAccountTitle,
-            environment.messageErrorRedHeader,
-            environment.messageErrorRedTitle,
-            environment.urlrouteaccount,
-            environment.messagePresentAlertAccount,
-            params);
+   await this.accountService.presentAlertConfirm(list, this.account);
 
     }
   

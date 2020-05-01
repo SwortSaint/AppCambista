@@ -1,0 +1,106 @@
+<ion-header>
+  <ion-toolbar color="cambista">
+    <ion-title>Datos Personales</ion-title>
+    <ion-buttons slot="start">
+      <ion-button (click)="dismissModal()"><ion-icon class="icon-size" name="arrow-back" ></ion-icon>Atrás</ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <form [formGroup]="formEdit">
+  <ion-item  class="ion-margin-top">
+    <ion-label><ion-icon name="browsers" slot="start" color="subtitulos"></ion-icon> Tipo de Documento</ion-label>
+    <ion-select formControlName="typedocument" interface="popover" placeholder="Seleccione">
+      <ion-select-option  [selected]="formEdit.get('typedocument').value == typedocument['CE']" value="CE">Carnet de Extranjeria</ion-select-option>
+      <ion-select-option  [selected]="formEdit.get('typedocument').value == typedocument['CR']" value="CR">Carnet de Refuiado</ion-select-option>
+      <ion-select-option  [selected]="formEdit.get('typedocument').value == typedocument['DNI']" value="DNI">DNI</ion-select-option>
+      <ion-select-option  [selected]="formEdit.get('typedocument').value == typedocument['PASSPORT']" value="PASSPORT">Pasaporte</ion-select-option>
+      <ion-select-option  [selected]="formEdit.get('typedocument').value == typedocument['PTP']" [selected]="true" value="PTP">PTP</ion-select-option>
+    </ion-select>
+  </ion-item>
+
+  <ion-item class="ion-text-right">
+    <ion-label>
+      <ion-icon name="card"  slot="start" color="subtitulos"></ion-icon>
+      N° Documento
+    </ion-label>
+    <ion-input formControlName="numberdocument" type="text" placeholder="N° Documento" clearInput></ion-input>
+  </ion-item>
+
+  <div class="ion-text-left ion-margin-start" *ngFor="let error of errorMessages.numberdocument">
+    <ng-container  *ngIf="formEdit.controls.numberdocument.hasError(error.type) && (formEdit.controls.numberdocument.dirty || formEdit.controls.numberdocument.touched)">
+      <ion-text  color="danger"><ion-icon name="add-circle"></ion-icon>{{error.message}}</ion-text>
+    </ng-container>
+  </div>
+
+  <ion-item>
+    <ion-label>
+      <ion-icon name="person" slot="start" color="subtitulos"></ion-icon>
+    </ion-label>
+    <ion-input type="text"  formControlName="firstname" placeholder="Primer nombre" clearInput></ion-input>
+  </ion-item>
+
+  <div class="ion-text-left ion-margin-start" *ngFor="let error of errorMessages.firstname">
+    <ng-container  *ngIf="formEdit.controls.firstname.hasError(error.type) && (formEdit.controls.firstname.dirty || formEdit.controls.firstname.touched)">
+      <ion-text  color="danger"><ion-icon name="add-circle"></ion-icon>{{error.message}}</ion-text>
+    </ng-container>
+  </div>
+
+  <ion-item>
+    <ion-label>
+      <ion-icon name="person" slot="start" color="subtitulos"></ion-icon>
+    </ion-label>
+    <ion-input type="text" formControlName="lastname" placeholder="Segundo nombre" clearInput></ion-input>
+  </ion-item>
+
+  <div class="ion-text-left ion-margin-start" *ngFor="let error of errorMessages.lastname">
+    <ng-container  *ngIf="formEdit.controls.lastname.hasError(error.type) && (formEdit.controls.lastname.dirty || formEdit.controls.lastname.touched)">
+      <ion-text  color="danger"><ion-icon name="add-circle"></ion-icon>{{error.message}}</ion-text>
+    </ng-container>
+  </div>
+
+  <ion-item>
+    <ion-label>
+      <ion-icon name="contact" slot="start" color="subtitulos"></ion-icon>
+    </ion-label>
+    <ion-input type="text" formControlName="fathername" placeholder="Apellido paterno" clearInput></ion-input>
+  </ion-item>
+  
+  <div class="ion-text-left ion-margin-start" *ngFor="let error of errorMessages.fathername">
+    <ng-container  *ngIf="formEdit.controls.fathername.hasError(error.type) && (formEdit.controls.fathername.dirty || formEdit.controls.fathername.touched)">
+      <ion-text  color="danger"><ion-icon name="add-circle"></ion-icon>{{error.message}}</ion-text>
+    </ng-container>
+  </div>
+
+  <ion-item>
+    <ion-label>
+      <ion-icon name="contact" slot="start" color="subtitulos"></ion-icon>
+    </ion-label>
+    <ion-input type="text" formControlName="mothername" placeholder="Apellido materno" clearInput></ion-input>
+  </ion-item>
+
+  <div class="ion-text-left ion-margin-start" *ngFor="let error of errorMessages.mothername">
+    <ng-container  *ngIf="formEdit.controls.mothername.hasError(error.type) && (formEdit.controls.mothername.dirty || formEdit.controls.mothername.touched)">
+      <ion-text  color="danger"><ion-icon name="add-circle"></ion-icon>{{error.message}}</ion-text>
+    </ng-container>
+  </div>
+
+  <ion-item>
+    <ion-label>
+      <ion-icon name="calendar" slot="start" color="subtitulos"> </ion-icon>
+      Fecha Nacimiento
+    </ion-label>
+    <ion-datetime formControlName="userdate"  ></ion-datetime>
+  </ion-item>
+
+  <ion-item>
+    <ion-label>
+      <ion-icon name="mail" slot="start" color="subtitulos"></ion-icon>
+    </ion-label>
+    <ion-input formControlName="email" type="text" placeholder="Correo Eléctronico" clearInput></ion-input>
+  </ion-item>
+
+  <ion-button (click)="userProfile()" [disabled]="!formEdit.valid || disableButton" expand="block" size="small" class="ion-padding" color="cambista"><ion-icon name="repeat"></ion-icon> &nbsp;Actualizar Datos Personales</ion-button>
+</form>
+</ion-content>

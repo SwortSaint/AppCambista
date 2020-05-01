@@ -57,6 +57,24 @@ ion-icon[slot=top] {
     font-size: 1.4rem
   }
 
+ion-icon[slot=start] {
+    vertical-align: middle;
+    padding-bottom: 2px;
+  }
+
+
+ion-icon[name=ios-close-circle]{
+    font-size: 1.0rem
+  }
+
+ion-icon[name=ios-checkmark-circle]{
+    font-size: 1.0rem
+  }
+  
+
+
+
+
 .sc-ion-searchbar-md-h {
     -webkit-padding-start: 6px;
     padding-inline-start: 6px;

@@ -1,0 +1,37 @@
+<ion-header>
+  <ion-toolbar color="cambista">
+    <ion-title>Cuentas de Cambista.com</ion-title>
+    <ion-buttons slot="start">
+      <ion-button (click)="dismissModal()"><ion-icon class="icon-size" name="arrow-back" ></ion-icon>Atrás</ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+
+<ion-content class="ion-padding ion-text-center">
+
+  <h5 class="ion-text-center">Solicite Nuestra Cuenta Bancaria de:</h5>
+
+  <form [formGroup]="formulario">
+  <ion-item>
+    <ion-label>Banco</ion-label>
+    <ion-select formControlName="bank_account" interface="popover" placeholder="Seleccione">
+      <ion-select-option value="BCP">BCP</ion-select-option>
+      <ion-select-option value="BBVA">BBVA</ion-select-option>
+      <ion-select-option value="INTERBANK">INTERBANK</ion-select-option>
+      <ion-select-option value="SCOTIABANK">SCOTIABANK</ion-select-option>
+      <ion-select-option value="DLNACION">DE LA NACION</ion-select-option>
+      <ion-select-option value="PICHINCHA">PICHINCHA</ion-select-option>
+      <ion-select-option value="BANBIF">BANBIF</ion-select-option>
+      <ion-select-option value="FALABELLA">FALABELLA</ion-select-option>
+      <ion-select-option value="AREQUIPA">CAJA AREQUIPA</ion-select-option>
+    </ion-select>
+  </ion-item>
+
+  <div class="button-center ion-padding-top">
+    <ion-button  (click)= "href()" [disabled]="!formulario.valid" color="cambista" size="small"> <ion-icon name="logo-whatsapp"></ion-icon>&nbsp; Solicitar N° de cuenta</ion-button>
+    <ion-button  (click)= "change_money()"[disabled]="!formulario.valid" color="subtitulos" size="small"> <ion-icon name="checkmark-circle"></ion-icon>&nbsp;¡Ya transferí!</ion-button>
+  </div>
+</form>
+
+</ion-content>
